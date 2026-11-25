@@ -1,0 +1,51 @@
+﻿<Window x:Class="ChronoPlay.Views.AgregarConsolaWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Agregar Consola"
+        Background="{StaticResource AppBg}"
+        Height="350"
+        Width="400"
+        MinWidth="360"
+        MinHeight="300">
+
+    <ScrollViewer Background="{StaticResource AppBg}" VerticalScrollBarVisibility="Auto">
+    <StackPanel Margin="20">
+
+        <TextBlock Text="// ESTACIONES"
+                   FontFamily="{StaticResource ShareTechMonoFont}"
+                   Foreground="{StaticResource Cyan}"/>
+        <TextBlock Text="AGREGAR CONSOLA"
+                   Style="{StaticResource SectionTitleStyle}"
+                   Margin="0,4,0,14"/>
+
+        <TextBlock Text="Nombre"/>
+
+        <TextBox x:Name="txtNombre"
+                 Margin="0,5"/>
+
+        <TextBlock Text="Tipo"/>
+
+        <ComboBox x:Name="cmbTipo"
+                  Margin="0,5">
+
+            <ComboBoxItem Content="PS4"/>
+            <ComboBoxItem Content="PS5"/>
+            <ComboBoxItem Content="XBOX"/>
+            <ComboBoxItem Content="Nintendo"/>
+
+        </ComboBox>
+
+        <TextBlock Text="Precio por hora"/>
+
+        <TextBox x:Name="txtPrecio"
+                 Margin="0,5"/>
+
+        <Button Content="Guardar"
+                Margin="0,20,0,0"
+                Style="{StaticResource PrimaryButtonStyle}"
+                Click="Guardar_Click"/>
+
+    </StackPanel>
+    </ScrollViewer>
+
+</Window>

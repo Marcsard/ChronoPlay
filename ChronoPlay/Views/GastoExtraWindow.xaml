@@ -1,0 +1,70 @@
+﻿<Window x:Class="ChronoPlay.Views.GastoExtraWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:ChronoPlay.Controls"
+        xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
+        Title="Registrar Gasto"
+        Background="{StaticResource AppBg}"
+        WindowStyle="None"
+        controls:WindowWorkAreaBehavior.KeepInWorkArea="True"
+        Height="390"
+        Width="380"
+        ResizeMode="NoResize">
+    <shell:WindowChrome.WindowChrome>
+        <shell:WindowChrome CaptionHeight="40"
+                            ResizeBorderThickness="6"
+                            GlassFrameThickness="0"
+                            CornerRadius="0"
+                            UseAeroCaptionButtons="False"/>
+    </shell:WindowChrome.WindowChrome>
+
+    <Grid Style="{StaticResource WindowChromeRootStyle}" Background="{StaticResource AppBg}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <controls:AppTitleBar Grid.Row="0"
+                              Title="REGISTRAR GASTO"
+                              IconGeometry="{StaticResource AppIconExpensesGeometry}"
+                              ShowMaximize="False"/>
+        <ScrollViewer Grid.Row="1"
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled">
+            <StackPanel Margin="20">
+
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+            <ContentControl Content="{StaticResource AppIconExpensesGeometry}"
+                            Style="{StaticResource AppIconBadgeStyle}"
+                            Width="40" Height="40"
+                            Margin="0,0,10,0"/>
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock Text="// FINANZAS"
+                           FontFamily="{StaticResource ShareTechMonoFont}"
+                           Foreground="{StaticResource Cyan}"/>
+                <TextBlock Text="REGISTRAR GASTO"
+                           Style="{StaticResource SectionTitleStyle}"
+                           FontSize="18"
+                           Margin="0,3,0,0"/>
+            </StackPanel>
+        </StackPanel>
+
+        <TextBlock Text="Concepto" Style="{StaticResource FieldLabelStyle}"/>
+
+        <TextBox x:Name="txtConcepto" Height="38"/>
+
+        <TextBlock Text="Monto"
+                   Style="{StaticResource FieldLabelStyle}"
+                   Margin="0,10,0,0"/>
+
+        <TextBox x:Name="txtMonto" Height="38"/>
+
+        <Button Content="Guardar"
+                Margin="0,14,0,0"
+                Style="{StaticResource PrimaryButtonStyle}"
+                Click="Guardar_Click"/>
+
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+
+        </Window>

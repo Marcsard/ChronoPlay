@@ -1,0 +1,116 @@
+<UserControl x:Class="ChronoPlay.Controls.UserAvatar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:ChronoPlay.Controls"
+             Width="54"
+             Height="54"
+             AutomationProperties.Name="Avatar de usuario">
+    <UserControl.Resources>
+        <controls:UserAvatarValueConverter x:Key="UserAvatarValueConverter"/>
+    </UserControl.Resources>
+    <Grid Width="54" Height="54">
+        <Border Width="48"
+                Height="48"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                CornerRadius="24"
+                Background="{StaticResource AccentGradient}">
+            <Border.Effect>
+                <DropShadowEffect Color="#818CF8" BlurRadius="12" ShadowDepth="0" Opacity="0.24"/>
+            </Border.Effect>
+        </Border>
+        <Border x:Name="AvatarFill"
+                Width="44"
+                Height="44"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                CornerRadius="22"
+                BorderBrush="{StaticResource AppBg}"
+                BorderThickness="2">
+            <Border.Style>
+                <Style TargetType="Border">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <Binding Path="UserName"
+                                     RelativeSource="{RelativeSource AncestorType={x:Type controls:UserAvatar}}"
+                                     Converter="{StaticResource UserAvatarValueConverter}"
+                                     ConverterParameter="Brush"/>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Role, RelativeSource={RelativeSource AncestorType={x:Type controls:UserAvatar}}}"
+                                     Value="Administrador">
+                            <Setter Property="Background" Value="#FF3B2A12"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+            <Grid>
+                <TextBlock x:Name="InitialText"
+                           Text="{Binding UserName, RelativeSource={RelativeSource AncestorType={x:Type controls:UserAvatar}}, Converter={StaticResource UserAvatarValueConverter}, ConverterParameter=Initial}"
+                           Foreground="{StaticResource TextPrimary}"
+                           FontFamily="{StaticResource ChakraPetchFont}"
+                           FontSize="19"
+                           FontWeight="Bold"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Visibility" Value="Visible"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding UserName, RelativeSource={RelativeSource AncestorType={x:Type controls:UserAvatar}}}" Value="">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding UserName, RelativeSource={RelativeSource AncestorType={x:Type controls:UserAvatar}}}" Value="{x:Null}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Role, RelativeSource={RelativeSource AncestorType={x:Type controls:UserAvatar}}}" Value="Administrador">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+                <Path x:Name="DefaultUserIcon"
+                      Data="{StaticResource AppIconUserGeometry}"
+                      Width="22"
+                      Height="22"
+                      Stretch="Uniform"
+                      Fill="Transparent"
+                      StrokeThickness="1.8"
+                      StrokeStartLineCap="Round"
+                      StrokeEndLineCap="Round"
+                      StrokeLineJoin="Round"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center">
+                    <Path.Style>
+                        <Style TargetType="Path">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Setter Property="Stroke" Value="{StaticResource TextPrimary}"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding UserName, RelativeSource={RelativeSource AncestorType={x:Type controls:UserAvatar}}}" Value="">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding UserName, RelativeSource={RelativeSource AncestorType={x:Type controls:UserAvatar}}}" Value="{x:Null}">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Role, RelativeSource={RelativeSource AncestorType={x:Type controls:UserAvatar}}}" Value="Administrador">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Setter Property="Stroke" Value="{StaticResource Price}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Path.Style>
+                </Path>
+            </Grid>
+        </Border>
+        <Ellipse Width="12"
+                 Height="12"
+                 HorizontalAlignment="Right"
+                 VerticalAlignment="Bottom"
+                 Margin="0,0,2,2"
+                 Fill="{StaticResource SuccessGlow}"
+                 Stroke="{StaticResource AppBg}"
+                 StrokeThickness="2"/>
+    </Grid>
+</UserControl>

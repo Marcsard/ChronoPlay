@@ -1,0 +1,236 @@
+﻿<Window x:Class="ChronoPlay.Views.ConfiguracionWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:ChronoPlay.Controls"
+        xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
+        Title="Configuración"
+        Background="{StaticResource AppBg}"
+        WindowStyle="None"
+        controls:WindowWorkAreaBehavior.KeepInWorkArea="True"
+        Height="750"
+        Width="600"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner">
+    <shell:WindowChrome.WindowChrome>
+        <shell:WindowChrome CaptionHeight="40"
+                            ResizeBorderThickness="6"
+                            GlassFrameThickness="0"
+                            CornerRadius="0"
+                            UseAeroCaptionButtons="False"/>
+    </shell:WindowChrome.WindowChrome>
+
+    <Grid Style="{StaticResource WindowChromeRootStyle}" Background="{StaticResource AppBg}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <controls:AppTitleBar Grid.Row="0"
+                              Title="CONFIGURACIÓN"
+                              IconGeometry="{StaticResource AppIconSettingsGeometry}"
+                              ShowMaximize="False"/>
+        <ScrollViewer Grid.Row="1" Background="{StaticResource AppBg}" VerticalScrollBarVisibility="Auto">
+
+        <Grid Margin="20">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Encabezado -->
+
+            <Border Grid.Row="0"
+                    Background="{StaticResource PanelBg}"
+                    BorderBrush="{StaticResource BorderGradient}"
+                    BorderThickness="1"
+                    CornerRadius="10"
+                    Padding="20"
+                    Margin="0,0,0,15">
+
+                <StackPanel Orientation="Horizontal">
+                    <ContentControl Content="{StaticResource AppIconSettingsGeometry}"
+                                    Style="{StaticResource AppIconBadgeStyle}"
+                                    Margin="0,0,14,0"/>
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock Text="// SISTEMA"
+                                   FontFamily="{StaticResource ShareTechMonoFont}"
+                                   Foreground="{StaticResource Cyan}"/>
+                        <TextBlock Text="CONFIGURACIÓN GENERAL"
+                                   FontFamily="{StaticResource OrbitronFont}"
+                                   FontSize="24"
+                                   FontWeight="Bold"
+                                   Foreground="{StaticResource TextPrimary}"/>
+                        <TextBlock Text="Opciones generales de ChronoPlay"
+                                   Foreground="{StaticResource TextMuted}"
+                                   Margin="0,5,0,0"/>
+                    </StackPanel>
+                </StackPanel>
+
+            </Border>
+
+            <!-- Negocio -->
+
+            <Border Grid.Row="1"
+                    Background="{StaticResource PanelBg}"
+                    BorderBrush="{StaticResource BorderGradient}"
+                    BorderThickness="1"
+                    CornerRadius="10"
+                    Padding="20"
+                    Margin="0,0,0,15">
+
+                <StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
+                        <ContentControl Content="{StaticResource AppIconStoreGeometry}"
+                                        Style="{StaticResource AppIconBadgeStyle}"
+                                        Width="38" Height="38"
+                                        Margin="0,0,10,0"/>
+                        <TextBlock Text="Negocio"
+                                   FontFamily="{StaticResource OrbitronFont}"
+                                   FontSize="18"
+                                   FontWeight="Bold"
+                                   Foreground="{StaticResource TextPrimary}"
+                                   VerticalAlignment="Center"/>
+                    </StackPanel>
+
+                    <TextBlock Text="Nombre del negocio"
+                               Foreground="{StaticResource TextNav}"/>
+
+                    <TextBox x:Name="txtNombre"
+                             Height="40"
+                             MaxLength="60"
+                             Margin="0,5,0,0"/>
+
+                </StackPanel>
+
+            </Border>
+
+            <!-- Alarma -->
+
+            <Border Grid.Row="2"
+                    Background="{StaticResource PanelBg}"
+                    BorderBrush="{StaticResource BorderGradient}"
+                    BorderThickness="1"
+                    CornerRadius="10"
+                    Padding="20"
+                    Margin="0,0,0,15">
+
+                <StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
+                        <ContentControl Content="{StaticResource AppIconAlarmGeometry}"
+                                        Style="{StaticResource AppIconBadgeStyle}"
+                                        Width="38" Height="38"
+                                        Margin="0,0,10,0"/>
+                        <TextBlock Text="Alarma"
+                                   FontFamily="{StaticResource OrbitronFont}"
+                                   FontSize="18"
+                                   FontWeight="Bold"
+                                   Foreground="{StaticResource TextPrimary}"
+                                   VerticalAlignment="Center"/>
+                    </StackPanel>
+
+                    <Border Background="{StaticResource CardInnerBg}"
+                            BorderBrush="{StaticResource BorderGradient}"
+                            BorderThickness="1"
+                            CornerRadius="8"
+                            Padding="14">
+
+                        <StackPanel>
+
+                            <CheckBox x:Name="chkSonido"
+                                      Content="Activar sonido de alarma"
+                                      FontSize="18"
+                                      FontWeight="Bold"
+                                      Foreground="{StaticResource Price}"
+                                      Padding="4"/>
+
+                            <TextBlock Text="Reproduce una alerta cuando termina el tiempo de una consola."
+                                       Foreground="{StaticResource TextMuted}"
+                                       TextWrapping="Wrap"
+                                       Margin="30,6,0,0"/>
+
+                        </StackPanel>
+
+                    </Border>
+
+                </StackPanel>
+
+            </Border>
+
+            <!-- Sistema -->
+
+            <Border Grid.Row="3"
+                    Background="{StaticResource PanelBg}"
+                    BorderBrush="{StaticResource BorderGradient}"
+                    BorderThickness="1"
+                    CornerRadius="10"
+                    Padding="20">
+
+                <StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
+                        <ContentControl Content="{StaticResource AppIconDiskGeometry}"
+                                        Style="{StaticResource AppIconBadgeStyle}"
+                                        Width="38" Height="38"
+                                        Margin="0,0,10,0"/>
+                        <TextBlock Text="Sistema"
+                                   FontFamily="{StaticResource OrbitronFont}"
+                                   FontSize="18"
+                                   FontWeight="Bold"
+                                   Foreground="{StaticResource TextPrimary}"
+                                   VerticalAlignment="Center"/>
+                    </StackPanel>
+
+                    <TextBlock Text="Retención del historial"
+                               Foreground="{StaticResource TextNav}"/>
+
+                    <ComboBox x:Name="cmbHistorial"
+                              SelectedValuePath="Content"
+                              Height="40"
+                              Margin="0,5,0,15">
+
+                        <ComboBoxItem Content="7 días"/>
+                        <ComboBoxItem Content="15 días"/>
+                        <ComboBoxItem Content="30 días"/>
+                        <ComboBoxItem Content="60 días"/>
+                        <ComboBoxItem Content="90 días"/>
+                        <ComboBoxItem Content="180 días"/>
+                        <ComboBoxItem Content="Nunca eliminar"/>
+
+                    </ComboBox>
+
+                    <CheckBox x:Name="chkRespaldo"
+                              Content="Respaldos automáticos"
+                              Foreground="{StaticResource TextPrimary}"
+                              Margin="0,5,0,20"/>
+
+                    <StackPanel Orientation="Horizontal">
+
+                        <Button Content="Guardar Configuración"
+                                Width="220"
+                                Height="40"
+                                Margin="0,0,10,0"
+                                Style="{StaticResource PrimaryButtonStyle}"
+                                Click="Guardar_Click"/>
+
+                        <Button Content="Crear Respaldo"
+                                Width="170"
+                                Height="40"
+                                Style="{StaticResource GhostButtonStyle}"
+                                Click="CrearRespaldo_Click"/>
+
+                    </StackPanel>
+
+                </StackPanel>
+
+            </Border>
+
+        </Grid>
+
+        </ScrollViewer>
+    </Grid>
+
+</Window>

@@ -1,0 +1,129 @@
+﻿<Window x:Class="ChronoPlay.Views.HistorialWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:ChronoPlay.Controls"
+        xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
+        Title="Historial"
+        Background="{StaticResource AppBg}"
+        WindowStyle="None"
+        controls:WindowWorkAreaBehavior.KeepInWorkArea="True"
+        Height="650"
+        Width="1000"
+        MinWidth="720"
+        MinHeight="450"
+        WindowStartupLocation="CenterScreen">
+    <shell:WindowChrome.WindowChrome>
+        <shell:WindowChrome CaptionHeight="40"
+                            ResizeBorderThickness="6"
+                            GlassFrameThickness="0"
+                            CornerRadius="0"
+                            UseAeroCaptionButtons="False"/>
+    </shell:WindowChrome.WindowChrome>
+
+    <Grid Style="{StaticResource WindowChromeRootStyle}" Background="{StaticResource AppBg}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <controls:AppTitleBar Grid.Row="0"
+                              Title="HISTORIAL"
+                              IconGeometry="{StaticResource AppIconHistoryGeometry}"/>
+        <Grid Grid.Row="1" Margin="20">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Border Background="{StaticResource PanelBg}"
+                BorderBrush="{StaticResource BorderGradient}"
+                BorderThickness="1"
+                CornerRadius="10"
+                Padding="15"
+                Margin="0,0,0,10">
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <ContentControl Content="{StaticResource AppIconHistoryGeometry}"
+                                Style="{StaticResource AppIconBadgeStyle}"
+                                Margin="0,0,14,0"/>
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock Text="// AUDITORÍA"
+                               FontFamily="{StaticResource ShareTechMonoFont}"
+                               Foreground="{StaticResource Cyan}"/>
+                    <TextBlock Text="HISTORIAL DE ACTIVIDAD (ÚLTIMOS 30 DÍAS)"
+                                FontFamily="{StaticResource OrbitronFont}"
+                                Foreground="{StaticResource TextPrimary}"
+                                FontSize="22"
+                                FontWeight="Bold"
+                                Margin="0,4,0,0"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <Border Grid.Row="1"
+                Background="{StaticResource PanelBg}"
+                BorderBrush="{StaticResource BorderGradient}"
+                BorderThickness="1"
+                CornerRadius="10"
+                Padding="10"
+                Margin="0,0,0,10">
+            <Grid>
+                <DataGrid x:Name="dgHistorial"
+                          AutoGenerateColumns="False"
+                          CanUserAddRows="False"
+                          IsReadOnly="True"
+                          SelectionChanged="dgHistorial_SelectionChanged"
+                          HorizontalScrollBarVisibility="Auto">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="85"/>
+                        <DataGridTextColumn Header="Tipo" Binding="{Binding Tipo}" Width="160"/>
+                        <DataGridTextColumn Header="Detalle" Binding="{Binding Detalle}" Width="*" MinWidth="160"/>
+                        <DataGridTextColumn Header="Fecha" Binding="{Binding Fecha}" Width="145"/>
+                        <DataGridTextColumn Header="Inicio" Binding="{Binding Inicio}" Width="145"/>
+                        <DataGridTextColumn Header="Fin" Binding="{Binding Fin}" Width="145"/>
+                        <DataGridTextColumn Header="Tiempo jugado" Binding="{Binding TiempoJugado}" Width="110"/>
+                        <DataGridTextColumn Header="Total" Binding="{Binding Total}" Width="120" ElementStyle="{StaticResource MonoDataGridCellStyle}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" IsHitTestVisible="False">
+                    <StackPanel.Style>
+                        <Style TargetType="StackPanel">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Items.Count, ElementName=dgHistorial}" Value="0">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </StackPanel.Style>
+                    <ContentControl Content="{StaticResource AppIconHistoryGeometry}"
+                                    Style="{StaticResource AppIconBadgeStyle}"
+                                    HorizontalAlignment="Center"/>
+                    <TextBlock Text="Sin actividad en los últimos 30 días"
+                               Foreground="{StaticResource TextMuted}"
+                               FontSize="16"
+                               HorizontalAlignment="Center"
+                               Margin="0,12,0,0"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <StackPanel Grid.Row="2"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right">
+
+            <Button x:Name="btnEliminarRegistro"
+                    Content="Eliminar Registro"
+                    Width="160"
+                    Height="40"
+                    Margin="5"
+                    IsEnabled="False"
+                    Style="{StaticResource StopButtonStyle}"
+                    Click="btnEliminar_Click"/>
+
+        </StackPanel>
+
+        </Grid>
+    </Grid>
+
+</Window>

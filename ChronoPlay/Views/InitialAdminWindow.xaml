@@ -1,0 +1,73 @@
+<Window x:Class="ChronoPlay.Views.InitialAdminWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:ChronoPlay.Controls"
+        xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
+        Title="Configuración inicial - ChronoPlay"
+        Background="{StaticResource AppBg}"
+        WindowStyle="None"
+        Height="560"
+        Width="500"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen">
+    <shell:WindowChrome.WindowChrome>
+        <shell:WindowChrome CaptionHeight="40"
+                            ResizeBorderThickness="6"
+                            GlassFrameThickness="0"
+                            CornerRadius="0"
+                            UseAeroCaptionButtons="False"/>
+    </shell:WindowChrome.WindowChrome>
+
+    <Grid Style="{StaticResource WindowChromeRootStyle}" Background="{StaticResource AppBg}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <controls:AppTitleBar Grid.Row="0"
+                              Title="CONFIGURACIÓN INICIAL"
+                              IconImageSource="{StaticResource ChronoPlayWindowIcon}"
+                              ShowMaximize="False"/>
+        <Border Grid.Row="1"
+                Margin="26"
+                Padding="26"
+                Background="{StaticResource PanelBg}"
+                BorderBrush="{StaticResource BorderGradient}"
+                BorderThickness="1"
+                CornerRadius="12">
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock Text="// PRIMER INICIO"
+                           FontFamily="{StaticResource ShareTechMonoFont}"
+                           Foreground="{StaticResource Cyan}"
+                           FontSize="12"/>
+                <TextBlock Text="CREA LA CUENTA ADMINISTRADOR"
+                           FontFamily="{StaticResource OrbitronFont}"
+                           FontSize="19"
+                           FontWeight="Bold"
+                           Margin="0,8,0,6"/>
+                <TextBlock Text="Define las credenciales para acceder a ChronoPlay. No se crea una contraseña predeterminada."
+                           Foreground="{StaticResource TextMuted}"
+                           TextWrapping="Wrap"
+                           Margin="0,0,0,18"/>
+
+                <TextBlock Text="USUARIO" Style="{StaticResource FieldLabelStyle}"/>
+                <TextBox x:Name="txtUsuario" MaxLength="60" Height="40"/>
+
+                <TextBlock Text="CONTRASEÑA"
+                           Style="{StaticResource FieldLabelStyle}"
+                           Margin="0,12,0,0"/>
+                <PasswordBox x:Name="txtPassword" MaxLength="128" Height="40"/>
+
+                <TextBlock Text="CONFIRMAR CONTRASEÑA"
+                           Style="{StaticResource FieldLabelStyle}"
+                           Margin="0,12,0,0"/>
+                <PasswordBox x:Name="txtConfirmarPassword" MaxLength="128" Height="40"/>
+
+                <Button Content="Crear cuenta y continuar"
+                        Height="44"
+                        Margin="0,22,0,0"
+                        Style="{StaticResource PrimaryButtonStyle}"
+                        Click="CrearCuenta_Click"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

@@ -1,0 +1,92 @@
+﻿<Window x:Class="ChronoPlay.Views.RegistrarVentaWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:ChronoPlay.Controls"
+        xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
+        Title="Registrar Venta"
+        Background="{StaticResource AppBg}"
+        WindowStyle="None"
+        controls:WindowWorkAreaBehavior.KeepInWorkArea="True"
+        Height="520"
+        Width="460"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner">
+    <shell:WindowChrome.WindowChrome>
+        <shell:WindowChrome CaptionHeight="40"
+                            ResizeBorderThickness="6"
+                            GlassFrameThickness="0"
+                            CornerRadius="0"
+                            UseAeroCaptionButtons="False"/>
+    </shell:WindowChrome.WindowChrome>
+
+    <Grid Style="{StaticResource WindowChromeRootStyle}" Background="{StaticResource AppBg}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <controls:AppTitleBar Grid.Row="0"
+                              Title="REGISTRAR VENTA"
+                              IconGeometry="{StaticResource AppIconSaleGeometry}"
+                              ShowMaximize="False"/>
+        <Grid Grid.Row="1" Margin="20">
+        <Border Style="{StaticResource CardBorderStyle}">
+
+        <StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                <ContentControl Content="{StaticResource AppIconSaleGeometry}"
+                                Style="{StaticResource AppIconBadgeStyle}"
+                                Width="40" Height="40"
+                                Margin="0,0,10,0"/>
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock Text="// PUNTO DE VENTA"
+                               FontFamily="{StaticResource ShareTechMonoFont}"
+                               Foreground="{StaticResource Cyan}"/>
+                    <TextBlock Text="REGISTRAR VENTA"
+                               Style="{StaticResource SectionTitleStyle}"
+                               FontSize="20"
+                               Margin="0,3,0,0"/>
+                </StackPanel>
+            </StackPanel>
+
+            <TextBlock Text="Proveedor" Style="{StaticResource FieldLabelStyle}"/>
+
+            <ComboBox x:Name="cmbProveedor"
+                      Height="42"
+                      FontSize="14"
+                      MaxDropDownHeight="300"
+                      IsEditable="False"
+                      IsTextSearchEnabled="True"
+                      DisplayMemberPath="Nombre"
+                      SelectionChanged="cmbProveedor_SelectionChanged"
+                      Margin="0,5,0,10"/>
+
+            <TextBlock Text="Producto" Style="{StaticResource FieldLabelStyle}"/>
+
+            <ComboBox x:Name="cmbProducto"
+                      Height="42"
+                      FontSize="14"
+                      MaxDropDownHeight="300"
+                      Margin="0,5,0,10"/>
+
+            <TextBlock Text="Cantidad" Style="{StaticResource FieldLabelStyle}"/>
+
+            <TextBox x:Name="txtCantidad"
+                     Height="40"
+                     MaxLength="9"
+                     PreviewTextInput="txtCantidad_PreviewTextInput"
+                     Margin="0,5,0,10"/>
+
+            <Button Content="Confirmar Venta"
+                    Margin="0,10,0,0"
+                    Height="35"
+                    Style="{StaticResource SuccessButtonStyle}"
+                    Click="RegistrarVenta_Click"/>
+
+        </StackPanel>
+        </Border>
+
+        </Grid>
+    </Grid>
+
+</Window>

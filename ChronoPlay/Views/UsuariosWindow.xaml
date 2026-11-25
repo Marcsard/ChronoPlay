@@ -1,0 +1,157 @@
+﻿<Window x:Class="ChronoPlay.Views.UsuariosWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:ChronoPlay.Controls"
+        xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
+        Title="Usuarios"
+        Background="{StaticResource AppBg}"
+        WindowStyle="None"
+        controls:WindowWorkAreaBehavior.KeepInWorkArea="True"
+        Height="700"
+        Width="1100"
+        MinWidth="760"
+        MinHeight="450"
+        WindowStartupLocation="CenterOwner">
+    <shell:WindowChrome.WindowChrome>
+        <shell:WindowChrome CaptionHeight="40"
+                            ResizeBorderThickness="6"
+                            GlassFrameThickness="0"
+                            CornerRadius="0"
+                            UseAeroCaptionButtons="False"/>
+    </shell:WindowChrome.WindowChrome>
+
+    <Grid Style="{StaticResource WindowChromeRootStyle}" Background="{StaticResource AppBg}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <controls:AppTitleBar Grid.Row="0"
+                              Title="USUARIOS"
+                              IconGeometry="{StaticResource AppIconUserGeometry}"/>
+        <Grid Grid.Row="1" Margin="20">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- CABECERA -->
+
+        <Border Grid.Row="0"
+                Background="{StaticResource PanelBg}"
+                BorderBrush="{StaticResource BorderGradient}"
+                BorderThickness="1"
+                CornerRadius="10"
+                Padding="15"
+                Margin="0,0,0,15">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0"
+                            Orientation="Horizontal"
+                            VerticalAlignment="Center"
+                            Margin="5">
+                    <ContentControl Content="{StaticResource AppIconUserGeometry}"
+                                    Style="{StaticResource AppIconBadgeStyle}"
+                                    Margin="0,0,14,0"/>
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock Text="// ACCESO"
+                                   FontFamily="{StaticResource ShareTechMonoFont}"
+                                   Foreground="{StaticResource Cyan}"/>
+                        <TextBlock Text="ADMINISTRACIÓN DE USUARIOS"
+                                   FontFamily="{StaticResource OrbitronFont}"
+                                   FontSize="21"
+                                   FontWeight="Bold"
+                                   Foreground="{StaticResource TextPrimary}"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <WrapPanel Grid.Row="1" HorizontalAlignment="Right">
+
+                    <Button x:Name="btnAgregarUsuario"
+                            Content="➕ Agregar"
+                            Style="{StaticResource PrimaryButtonStyle}"
+                            Width="120"
+                            Height="40"
+                            Margin="5"
+                            Click="btnAgregarUsuario_Click"/>
+
+                    <Button x:Name="btnEditarUsuario"
+                            Content="✏ Editar"
+                            Width="120"
+                            Height="40"
+                            Margin="5"
+                            Click="btnEditar_Click"/>
+
+                    <Button x:Name="btnActivarUsuario"
+                            Content="✅ Activar"
+                            Width="120"
+                            Height="40"
+                            Margin="5"
+                            Click="btnActivar_Click"/>
+
+                    <Button x:Name="btnDesactivarUsuario"
+                            Content="❌ Desactivar"
+                            Style="{StaticResource StopButtonStyle}"
+                            Width="120"
+                            Height="40"
+                            Margin="5"
+                            Click="btnDesactivar_Click"/>
+
+                </WrapPanel>
+
+            </Grid>
+
+        </Border>
+
+        <!-- TABLA -->
+
+        <Border Grid.Row="1"
+                Background="{StaticResource PanelBg}"
+                CornerRadius="10"
+                Padding="10">
+
+            <DataGrid x:Name="dgUsuarios"
+                      AutoGenerateColumns="False"
+                      CanUserAddRows="False"
+                      IsReadOnly="True"
+                      Background="{StaticResource PanelBg}"
+                      Foreground="{StaticResource TextPrimary}"
+                      HeadersVisibility="Column">
+
+                <DataGrid.Columns>
+
+                    <DataGridTextColumn Header="ID"
+                                        Binding="{Binding Id}"
+                                        Width="80"/>
+
+                    <DataGridTextColumn Header="Nombre"
+                                        Binding="{Binding Nombre}"
+                                        Width="*"/>
+
+                    <DataGridTextColumn Header="Usuario"
+                                        Binding="{Binding UsuarioLogin}"
+                                        Width="180"/>
+
+                    <DataGridTextColumn Header="Rol"
+                                        Binding="{Binding Rol}"
+                                        Width="180"/>
+
+                    <DataGridCheckBoxColumn Header="Activo"
+                                            Binding="{Binding Activo}"
+                                            Width="120"/>
+
+                </DataGrid.Columns>
+
+            </DataGrid>
+
+        </Border>
+
+        </Grid>
+    </Grid>
+
+</Window>

@@ -1,0 +1,304 @@
+﻿<Window x:Class="ChronoPlay.Views.DashboardWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:ChronoPlay.Controls"
+        xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
+        Title="ChronoPlay"
+        Background="{StaticResource AppBg}"
+        WindowStyle="None"
+        controls:WindowWorkAreaBehavior.KeepInWorkArea="True"
+        Height="820"
+        Width="1440"
+        MinWidth="900"
+        MinHeight="600"
+        WindowStartupLocation="CenterScreen"
+        SizeChanged="DashboardWindow_SizeChanged">
+    <shell:WindowChrome.WindowChrome>
+        <shell:WindowChrome CaptionHeight="40"
+                            ResizeBorderThickness="6"
+                            GlassFrameThickness="0"
+                            CornerRadius="0"
+                            UseAeroCaptionButtons="False"/>
+    </shell:WindowChrome.WindowChrome>
+
+    <Grid Style="{StaticResource WindowChromeRootStyle}" Background="{StaticResource AppBg}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <controls:AppTitleBar Grid.Row="0"
+                              Title="CHRONOPLAY"
+                              IconImageSource="{StaticResource ChronoPlayWindowIcon}"/>
+        <Grid Grid.Row="1" Background="{StaticResource AppBg}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition x:Name="SidebarColumn" Width="268"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Border x:Name="Sidebar"
+                Grid.Column="0"
+                Background="{StaticResource SidebarBg}"
+                BorderBrush="{StaticResource BorderGradient}"
+                BorderThickness="0,0,1,0">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel x:Name="SidebarContent" Margin="18">
+                    <StackPanel Margin="0,2,0,18">
+                        <ContentControl Content="{StaticResource AppIconDashboardGeometry}"
+                                        Style="{StaticResource AppIconBadgeStyle}"
+                                        HorizontalAlignment="Center"/>
+                        <TextBlock x:Name="BrandLabel"
+                                   Text="ChronoPlay"
+                                   FontFamily="{StaticResource OrbitronFont}"
+                                   FontSize="16"
+                                   FontWeight="Bold"
+                                   HorizontalAlignment="Center"
+                                   TextAlignment="Center"
+                                   Margin="0,8,0,0"/>
+                        <Border Height="2"
+                                Margin="0,14,0,0"
+                                Background="{StaticResource BorderActiveGradient}"/>
+                    </StackPanel>
+
+                    <TextBlock x:Name="MenuLabel"
+                               Text="// MENÚ"
+                               FontFamily="{StaticResource ShareTechMonoFont}"
+                               Foreground="{StaticResource Cyan}"
+                               Margin="4,0,0,8"/>
+
+                    <Button x:Name="btnAdministrarConsolas"
+                            Content="CONSOLAS"
+                            Tag="{StaticResource AppIconConsoleGeometry}"
+                            ToolTip="Consolas"
+                            Style="{StaticResource NavActiveButtonStyle}"
+                            Click="btnAdministrarConsolas_Click"/>
+
+                    <Button x:Name="btnInventario"
+                            Content="INVENTARIO"
+                            Tag="{StaticResource AppIconInventoryGeometry}"
+                            ToolTip="Inventario"
+                            Style="{StaticResource NavButtonStyle}"
+                            Click="btnInventario_Click"/>
+
+                    <Button x:Name="btnCaja"
+                            Content="CORTE DE CAJA"
+                            Tag="{StaticResource AppIconCashGeometry}"
+                            ToolTip="Corte de Caja"
+                            Style="{StaticResource NavButtonStyle}"
+                            Click="btnCaja_Click"/>
+
+                    <Button x:Name="btnReportes"
+                            Content="REPORTES"
+                            Tag="{StaticResource AppIconReportGeometry}"
+                            ToolTip="Reportes"
+                            Style="{StaticResource NavButtonStyle}"
+                            Click="btnReportes_Click"/>
+
+                    <Button x:Name="btnHistorial"
+                            Content="HISTORIAL"
+                            Tag="{StaticResource AppIconHistoryGeometry}"
+                            ToolTip="Historial"
+                            Style="{StaticResource NavButtonStyle}"
+                            Click="btnHistorial_Click"/>
+
+                    <Button x:Name="btnUsuarios"
+                            Content="USUARIOS"
+                            Tag="{StaticResource AppIconUserGeometry}"
+                            ToolTip="Usuarios"
+                            Style="{StaticResource NavButtonStyle}"
+                            Click="btnUsuarios_Click"/>
+
+                    <Button x:Name="btnConfiguracion"
+                            Content="CONFIGURACIÓN"
+                            Tag="{StaticResource AppIconSettingsGeometry}"
+                            ToolTip="Configuración"
+                            Style="{StaticResource NavButtonStyle}"
+                            Click="btnConfiguracion_Click"/>
+
+                    <Border Height="1"
+                            Margin="4,16,4,12"
+                            Background="{StaticResource BorderGradient}"/>
+
+                    <Button x:Name="btnGastos"
+                            Content="GASTOS"
+                            Tag="{StaticResource AppIconExpensesGeometry}"
+                            ToolTip="Gastos"
+                            Style="{StaticResource NavDangerButtonStyle}"
+                            Margin="0,0,0,6"
+                            Click="btnGastos_Click"/>
+
+                    <Button x:Name="btnSalir"
+                            Content="SALIR"
+                            Tag="{StaticResource AppIconLogoutGeometry}"
+                            ToolTip="Salir"
+                            Style="{StaticResource NavSecondaryButtonStyle}"
+                            Click="btnSalir_Click"/>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+
+        <ScrollViewer Grid.Column="1"
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled">
+            <StackPanel Margin="28,24,28,30">
+                <Grid Margin="0,0,0,22">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                        <TextBlock Text="// PANEL DE CONTROL"
+                                   FontFamily="{StaticResource ShareTechMonoFont}"
+                                   Foreground="{StaticResource Cyan}"
+                                   FontSize="13"/>
+                        <TextBlock Text="CONSOLAS"
+                                   FontFamily="{StaticResource OrbitronFont}"
+                                   FontSize="28"
+                                   FontWeight="Bold"
+                                   Margin="0,4,0,0"/>
+                        <TextBlock x:Name="txtNombreNegocio"
+                                   Text="Nombre de Negocio"
+                                   Foreground="{StaticResource TextMuted}"
+                                   FontSize="13"
+                                   Margin="0,2,0,0"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1"
+                                Orientation="Horizontal"
+                                VerticalAlignment="Center">
+                        <Button x:Name="btnRegistrarVenta"
+                                MinWidth="190"
+                                Height="46"
+                                Margin="0,0,18,0"
+                                Style="{StaticResource SuccessButtonStyle}"
+                                Click="btnRegistrarVenta_Click">
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <Path Data="{StaticResource AppIconSaleGeometry}"
+                                      Width="18" Height="18"
+                                      Margin="0,0,8,0"
+                                      Fill="Transparent"
+                                      Stroke="{StaticResource TextPrimary}"
+                                      StrokeThickness="1.8"
+                                      StrokeStartLineCap="Round"
+                                      StrokeEndLineCap="Round"
+                                      StrokeLineJoin="Round"
+                                      Stretch="Uniform"/>
+                                <TextBlock Text="REGISTRAR VENTA"
+                                           Foreground="{StaticResource TextPrimary}"
+                                           FontWeight="SemiBold"
+                                           VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                        <controls:UserAvatar x:Name="avatarUsuario"
+                                             Margin="0,0,10,0"/>
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Text="// USUARIO CONECTADO"
+                                       FontFamily="{StaticResource ShareTechMonoFont}"
+                                       Foreground="{StaticResource Cyan}"
+                                       FontSize="10"/>
+                            <TextBlock x:Name="txtUsuarioSesion"
+                                       FontFamily="{StaticResource ChakraPetchFont}"
+                                       Foreground="{StaticResource TextPrimary}"
+                                       FontSize="15"
+                                       FontWeight="Bold"/>
+                            <TextBlock x:Name="txtRolUsuario"
+                                       Foreground="{StaticResource TextMuted}"
+                                       FontSize="11"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+
+                <Grid x:Name="HudCardsGrid" Margin="0,0,0,26">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <controls:ChamferBorder Grid.Row="0" Grid.Column="0"
+                                            Style="{StaticResource HudCard}"
+                                            TopLineBrush="{StaticResource InUse}"
+                                            Margin="0,0,10,10">
+                        <StackPanel>
+                            <TextBlock Text="// EN USO"
+                                       Foreground="{StaticResource InUse}"
+                                       FontFamily="{StaticResource OrbitronFont}"
+                                       FontSize="12"/>
+                            <TextBlock x:Name="txtOcupadas"
+                                       Text="0"
+                                       FontFamily="{StaticResource ShareTechMonoFont}"
+                                       FontSize="34"
+                                       FontWeight="Bold"
+                                       Margin="0,8,0,0"/>
+                        </StackPanel>
+                    </controls:ChamferBorder>
+
+                    <controls:ChamferBorder Grid.Row="0" Grid.Column="1"
+                                            Style="{StaticResource HudCard}"
+                                            TopLineBrush="{StaticResource Free}"
+                                            Margin="5,0,5,10">
+                        <StackPanel>
+                            <TextBlock Text="// LIBRES"
+                                       Foreground="{StaticResource Free}"
+                                       FontFamily="{StaticResource OrbitronFont}"
+                                       FontSize="12"/>
+                            <TextBlock x:Name="txtLibres"
+                                       Text="0"
+                                       FontFamily="{StaticResource ShareTechMonoFont}"
+                                       FontSize="34"
+                                       FontWeight="Bold"
+                                       Margin="0,8,0,0"/>
+                        </StackPanel>
+                    </controls:ChamferBorder>
+
+                    <controls:ChamferBorder Grid.Row="0" Grid.Column="2"
+                                            Style="{StaticResource HudCard}"
+                                            TopLineBrush="{StaticResource Price}"
+                                            Margin="10,0,0,10">
+                        <StackPanel>
+                            <TextBlock Text="// VENTAS DEL DÍA"
+                                       Foreground="{StaticResource Price}"
+                                       FontFamily="{StaticResource OrbitronFont}"
+                                       FontSize="12"/>
+                            <TextBlock x:Name="txtVentas"
+                                       Text="$0.00"
+                                       FontFamily="{StaticResource ShareTechMonoFont}"
+                                       FontSize="30"
+                                       FontWeight="Bold"
+                                       Margin="0,8,0,0"/>
+                        </StackPanel>
+                    </controls:ChamferBorder>
+                </Grid>
+
+                <Grid Margin="0,0,0,12">
+                    <StackPanel>
+                        <TextBlock Text="// SESIONES EN VIVO"
+                                   FontFamily="{StaticResource ShareTechMonoFont}"
+                                   Foreground="{StaticResource Cyan}"
+                                   FontSize="12"/>
+                        <TextBlock Text="ESTACIONES DE JUEGO"
+                                   FontFamily="{StaticResource OrbitronFont}"
+                                   FontWeight="Bold"
+                                   FontSize="18"
+                                   Margin="0,4,0,0"/>
+                    </StackPanel>
+                </Grid>
+
+                <WrapPanel x:Name="PanelConsolas"
+                           HorizontalAlignment="Center"
+                           Margin="-12,0,-12,0"/>
+
+                <DataGrid x:Name="dgHistorial"
+                          Height="0"
+                          Visibility="Collapsed"
+                          IsReadOnly="True"/>
+            </StackPanel>
+        </ScrollViewer>
+        </Grid>
+    </Grid>
+</Window>
