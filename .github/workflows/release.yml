@@ -1,0 +1,117 @@
+name: Build and publish release
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Read and validate project version
+        id: version
+        shell: pwsh
+        run: |
+          [xml]$project = Get-Content .\ChronoPlay\ChronoPlay.csproj
+          $version = $project.Project.PropertyGroup |
+            Where-Object { $_.Version } |
+            Select-Object -First 1 -ExpandProperty Version
+          if ([string]::IsNullOrWhiteSpace($version)) {
+            throw 'The project Version property is missing.'
+          }
+
+          $tag = "v$version"
+          if ($env:GITHUB_REF.StartsWith('refs/tags/') -and $env:GITHUB_REF_NAME -ne $tag) {
+            throw "Git tag '$env:GITHUB_REF_NAME' does not match project version '$version'. Expected '$tag'."
+          }
+
+          "version=$version" >> $env:GITHUB_OUTPUT
+          "tag=$tag" >> $env:GITHUB_OUTPUT
+
+      - name: Restore dependencies
+        run: dotnet restore .\ChronoPlay\ChronoPlay.csproj --runtime win-x64
+
+      - name: Publish self-contained Windows executable
+        run: dotnet publish .\ChronoPlay\ChronoPlay.csproj --configuration Release --runtime win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true --no-restore
+
+      - name: Install Inno Setup
+        run: choco install innosetup --yes --no-progress
+
+      - name: Build per-user installer
+        shell: pwsh
+        run: |
+          $compiler = 'C:\Program Files (x86)\Inno Setup 6\ISCC.exe'
+          if (-not (Test-Path $compiler)) {
+            throw "Inno Setup compiler not found at $compiler."
+          }
+
+          New-Item -ItemType Directory -Path .\artifacts -Force | Out-Null
+          & $compiler "/DAppVersion=${{ steps.version.outputs.version }}" .\installer\ChronoPlay.iss
+          if ($LASTEXITCODE -ne 0) {
+            throw "Inno Setup failed with exit code $LASTEXITCODE."
+          }
+
+          $artifacts = Join-Path $env:GITHUB_WORKSPACE 'artifacts'
+          $publish = Join-Path $env:GITHUB_WORKSPACE 'ChronoPlay\bin\Release\net10.0-windows\win-x64\publish\ChronoPlay.exe'
+          Copy-Item $publish (Join-Path $artifacts "ChronoPlay-${{ steps.version.outputs.version }}-win-x64.exe")
+          Get-ChildItem $artifacts -File |
+            Where-Object { $_.Name -notlike 'SHA256SUMS-*' } |
+            Get-FileHash -Algorithm SHA256 |
+            ForEach-Object { "$($_.Hash)  $([System.IO.Path]::GetFileName($_.Path))" } |
+            Set-Content -Encoding ascii (Join-Path $artifacts "SHA256SUMS-${{ steps.version.outputs.version }}.txt")
+
+      - name: Publish GitHub release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ steps.version.outputs.tag }}
+          RELEASE_VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          gh release view $env:RELEASE_TAG --repo $env:GITHUB_REPOSITORY *> $null
+          $releaseExists = $LASTEXITCODE -eq 0
+
+          if ($releaseExists -and $env:GITHUB_REF -eq 'refs/heads/main') {
+            Write-Output "Release $env:RELEASE_TAG already exists; leaving its published assets unchanged."
+            exit 0
+          }
+
+          if (-not $releaseExists -and $env:GITHUB_REF -eq 'refs/heads/main') {
+            git ls-remote --exit-code origin "refs/tags/$env:RELEASE_TAG" *> $null
+            if ($LASTEXITCODE -ne 0) {
+              Write-Output "Release skipped: push tag $env:RELEASE_TAG to publish this version."
+              exit 0
+            }
+          }
+
+          $assets = @(Get-ChildItem .\artifacts -File | Select-Object -ExpandProperty FullName)
+          if ($assets.Count -lt 3) {
+            throw 'The installer, portable executable, and checksum manifest were not all generated.'
+          }
+
+          if ($releaseExists) {
+            $arguments = @('release', 'upload', $env:RELEASE_TAG) + $assets + @('--repo', $env:GITHUB_REPOSITORY, '--clobber')
+          }
+          else {
+            $arguments = @('release', 'create', $env:RELEASE_TAG) + $assets + @('--repo', $env:GITHUB_REPOSITORY, '--title', "ChronoPlay $env:RELEASE_VERSION", '--generate-notes', '--verify-tag')
+          }
+
+          & gh @arguments
+          if ($LASTEXITCODE -ne 0) {
+            throw "GitHub release publishing failed with exit code $LASTEXITCODE."
+          }

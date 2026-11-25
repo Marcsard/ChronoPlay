@@ -17,6 +17,12 @@
 - Para ejecutar la publicación autónoma, no hace falta instalar .NET por separado.
 - Para compilar desde el código fuente: .NET 10 SDK y Visual Studio 2026 con las herramientas de escritorio .NET/WPF.
 
+## Descargar e instalar
+
+Descarga el instalador minimalista para Windows x64 desde [Releases](https://github.com/KrizMet66/ChronoPlay/releases/latest). La instalación es por usuario y no requiere privilegios de administrador ni instalar .NET. También se publica el ejecutable portátil independiente y los hashes SHA-256.
+
+El instalador crea un acceso directo en el menú Inicio; el acceso directo del escritorio es opcional. Al desinstalar se quita la aplicación, pero se conservan los datos del usuario.
+
 ## Ejecutar y conservar los datos
 
 La aplicación publicada guarda su base de datos en:
@@ -27,11 +33,11 @@ La aplicación publicada guarda su base de datos en:
 
 Esta ruta pertenece al usuario de Windows que inicia ChronoPlay. Para abrir una instalación y sus datos existentes, ejecuta la aplicación con la misma cuenta de Windows. Cambiar de cuenta cambia la carpeta `AppData\Local` utilizada.
 
-Los registros no se guardan junto al ejecutable. Antes de reemplazar una instalación, cierra ChronoPlay y conserva una copia de `ChronoPlay.db` y de la carpeta `%LOCALAPPDATA%\ChronoPlay`.
+Los registros no se guardan junto al ejecutable ni se eliminan al desinstalar. Antes de reemplazar una instalación, cierra ChronoPlay y conserva una copia de `ChronoPlay.db` y de la carpeta `%LOCALAPPDATA%\ChronoPlay`.
 
 En el primer inicio de una instalación sin base de datos se crea la base local y se solicita crear la cuenta administradora inicial. No se configura una contraseña predeterminada.
 
-> La configuración de desarrollo (`Debug`) usa SQL Server LocalDB. La publicación (`Release`) usa SQLite. No se debe asumir que los datos de LocalDB se migran automáticamente a SQLite.
+> La configuración de desarrollo (`Debug`) usa SQL Server LocalDB. La publicación (`Release`) usa SQLite. No se asume que los datos de LocalDB se migran automáticamente a SQLite.
 
 ## Compilar
 
@@ -53,6 +59,29 @@ El archivo generado queda en:
 ```text
 ChronoPlay\bin\Release\net10.0-windows\win-x64\publish\ChronoPlay.exe
 ```
+
+Para crear localmente el instalador (requiere [Inno Setup 6](https://jrsoftware.org/isinfo.php)):
+
+```powershell
+& "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" /DAppVersion=1.0.0 .\installer\ChronoPlay.iss
+```
+
+El instalador se genera en `artifacts\ChronoPlay-Setup-1.0.0-win-x64.exe`. El paquete se crea con [Inno Setup](https://jrsoftware.org/isinfo.php).
+
+## Publicar una actualización
+
+La rama `main` es la rama estable. Para cada versión:
+
+1. Actualiza `Version`, `AssemblyVersion`, `FileVersion` e `InformationalVersion` en `ChronoPlay/ChronoPlay.csproj`.
+2. Integra los cambios y envíalos a `main`.
+3. Crea y sube una etiqueta que coincida exactamente con la versión, por ejemplo `v1.0.1`:
+
+   ```powershell
+   git tag -a v1.0.1 -m "ChronoPlay 1.0.1"
+   git push origin v1.0.1
+   ```
+
+GitHub Actions compila el ejecutable autónomo, lo empaqueta en el instalador y publica el instalador, el ejecutable portátil y sus sumas SHA-256 en GitHub Releases. El flujo valida que la etiqueta y la versión del proyecto coincidan.
 
 ## Estructura
 
